@@ -1,0 +1,3 @@
+[submodule "japan_geojson/land"]
+	path = japan_geojson/land
+	url = https://github.com/earthquake-alert/land.git
