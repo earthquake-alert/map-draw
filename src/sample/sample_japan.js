@@ -23,11 +23,20 @@ q.awaitAll((err, files) => {
         .center([136.0, 35.6])
         .translate([width / 2, height / 2])
         .scale(scale);
-    var geoPath = d3.geoPath().projection(aProjection);
+
+    var geoPath = d3.geoPath()
+        .projection(aProjection);
+
     var svg = d3.select(document.body)
         .append('svg')
+        .attr("xmlns", 'http://www.w3.org/2000/svg')
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("xmin", aProjection.invert([0, 0])[0])
+        .attr("xmax", aProjection.invert([width, height])[0])
+        .attr("ymin", aProjection.invert([width, height])[1])
+        .attr("ymax", aProjection.invert([0, 0])[1])
+        .attr("scale", aProjection.scale());
 
     //マップ描画
     var map = svg.selectAll("path")
@@ -35,9 +44,11 @@ q.awaitAll((err, files) => {
         .enter()
         .append("path")
         .attr("d", geoPath)
-        .style("stroke", "#ffffff")
-        .style("stroke-width", 0.1)
-        .style("fill", "#5EAFC6");
+        .attr("fill", "none")
+        .attr("stroke", "silver")
+        .attr("stroke-width", 1)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round");
 
     fs.writeFile('output.svg', document.body.innerHTML, (err) => {
         if (err) throw err;
