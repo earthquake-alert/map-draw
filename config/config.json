@@ -1,0 +1,8 @@
+{
+    "width": 1920,
+    "heght": 1080,
+    "sea-color": "#1a1a1a",
+    "japan-color": "#595959",
+    "stroke": "#ffffff",
+    "map": "japan_geojson/land/japan.geojson"
+}

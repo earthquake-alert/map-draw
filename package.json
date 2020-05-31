@@ -2,9 +2,11 @@
   "dependencies": {
     "argv": "^0.0.2",
     "d3": "^5.16.0",
+    "d3-geo": "^1.12.1",
     "d3-queue": "^3.0.7",
     "fs": "^0.0.1-security",
     "jsdom": "^16.2.2",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "simplify-geojson": "^1.0.3"
   }
 }

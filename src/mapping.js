@@ -6,6 +6,7 @@
 const argv = require('argv');
 const d3 = Object.assign({}, require("d3"), require("d3-queue"));
 const fs = require("fs");
+const simplify = require('simplify-geojson');
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -13,7 +14,7 @@ const document = new JSDOM(``).window.document;
 
 global.fetch = require("node-fetch");
 
-// argv set and loading
+// argv and config load
 argv.option({
     name: 'out',
     short: 'o',
@@ -28,27 +29,14 @@ argv.option({
     description: 'Path of json to input',
     example: "'script --in=input.json' or 'script -i input.json'"
 });
-argv.option({
-    name: 'width',
-    short: 'w',
-    type: 'int',
-    description: 'width of svg',
-    example: "'script --width=100' or 'script -w 100'"
-});
-argv.option({
-    name: 'height',
-    short: 'h',
-    type: 'int',
-    description: 'height of svg',
-    example: "'script --height 100' or 'script -h 100'"
-});
 
 _argv = argv.run
+config = require('config/config.json');
 
 const area_info = require(_argv.options.in[0]);
 const save_svg_path = _argv.options.out[0];
-const width = _argv.options.width[0];
-const height = _argv.options.height[0];
+const width = config.width;
+const height = config.height;
 
 const q = d3.queue()
     .defer(fs.readFile, 'japan_geojson/land/japan.geojson');

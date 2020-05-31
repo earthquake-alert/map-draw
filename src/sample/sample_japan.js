@@ -1,28 +1,31 @@
 // d3.jsの表示テスト
-const d3 = Object.assign({}, require("d3"), require("d3-queue"));
+const d3 = Object.assign({}, require("d3"), require("d3-geo"), require("d3-queue"));
 const jsdom = require("jsdom");
 const fs = require("fs");
+const simplify = require('simplify-geojson');
 const { JSDOM } = jsdom;
 global.fetch = require("node-fetch");
 
 const document = new JSDOM(``).window.document;
 
-var width = 600,
-    height = 600;
-var scale = 1600;
+var width = 1920,
+    height = 1080;
+var scale = 15000;
+var center = [139.4257, 35.4011];
 
 const q = d3.queue()
     .defer(fs.readFile, 'japan_geojson/land/japan.geojson');
 
-q.awaitAll((err, files) => {
+q.await((err, files) => {
     if (err) throw err;
-    const data = files.map(str => JSON.parse(str));
-
+    var data = JSON.parse(files);
+    data = simplify(data, 0.1);
 
     var aProjection = d3.geoMercator()
-        .center([136.0, 35.6])
+        .center(center)
         .translate([width / 2, height / 2])
         .scale(scale);
+
 
     var geoPath = d3.geoPath()
         .projection(aProjection);
@@ -36,19 +39,19 @@ q.awaitAll((err, files) => {
         .attr("xmax", aProjection.invert([width, height])[0])
         .attr("ymin", aProjection.invert([width, height])[1])
         .attr("ymax", aProjection.invert([0, 0])[1])
-        .attr("scale", aProjection.scale());
+        .attr("scale", aProjection.scale())
+        .style('background-color', "#1a1a1a");
 
     //マップ描画
-    var map = svg.selectAll("path")
-        .data(data)
-        .enter()
-        .append("path")
+    svg.append("path")
+        .datum(data)
         .attr("d", geoPath)
-        .attr("fill", "none")
-        .attr("stroke", "silver")
+        .attr("fill", "#595959")
+        .attr("stroke", "#ffffff")
         .attr("stroke-width", 1)
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round");
+
 
     fs.writeFile('output.svg', document.body.innerHTML, (err) => {
         if (err) throw err;
