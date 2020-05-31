@@ -75,11 +75,31 @@ q.awaitAll((err, files) => {
     svg.append('path')
         .datum(data)
         .attr('d', geoPath)
-        .attr('fill', land_color)
-        .attr('stroke', stroke_color)
         .attr('stroke-width', 1)
         .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round');
+        .attr('stroke-linecap', 'round')
+        .style('fill', land_color)
+        .style('stroke', stroke_color);
+
+    // -- epicenter --
+    center = aProjection(epicenter)
+    svg.append('line')
+        .attr('x1', center[0] - 20)
+        .attr('x2', center[0] + 20)
+        .attr('y1', center[1] - 20)
+        .attr('y2', center[1] + 20)
+        .attr('stroke-width', 10)
+        .style('stroke', '#eb3b3b');
+
+    svg.append('line')
+        .attr('x1', center[0] - 20)
+        .attr('x2', center[0] + 20)
+        .attr('y1', center[1] + 20)
+        .attr('y2', center[1] - 20)
+        .attr('stroke-width', 10)
+        .style('stroke', '#eb3b3b');
+
+
 
 
     // --- Save SVG file ----
