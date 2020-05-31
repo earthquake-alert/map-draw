@@ -4,7 +4,6 @@ const jsdom = require("jsdom");
 const fs = require("fs");
 const simplify = require('simplify-geojson');
 const { JSDOM } = jsdom;
-global.fetch = require("node-fetch");
 
 const document = new JSDOM(``).window.document;
 
@@ -19,7 +18,7 @@ const q = d3.queue()
 q.await((err, files) => {
     if (err) throw err;
     var data = JSON.parse(files);
-    data = simplify(data, 0.1);
+    data = simplify(data, 0.02);
 
     var aProjection = d3.geoMercator()
         .center(center)

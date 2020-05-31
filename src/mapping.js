@@ -1,49 +1,90 @@
 // -----------------------------------------
-// | @author: Yuto Watanabe                |
-// |                                       |
-// | Copyright (c) 2020 Earthquake alert   |
+// @author: Yuto Watanabe
+//
+// Copyright (c) 2020 Earthquake alert
 // -----------------------------------------
-const argv = require('argv');
-const d3 = Object.assign({}, require("d3"), require("d3-queue"));
+
+// --- Read module ---
+const commandLineArgs = require('command-line-args');
+const d3 = Object.assign({}, require("d3"), require("d3-geo"), require("d3-queue"));
 const fs = require("fs");
 const simplify = require('simplify-geojson');
-
 const jsdom = require("jsdom");
+
 const { JSDOM } = jsdom;
 const document = new JSDOM(``).window.document;
 
-global.fetch = require("node-fetch");
 
-// argv and config load
-argv.option({
-    name: 'out',
-    short: 'o',
-    type: 'string',
-    description: 'Path of svg to output',
-    example: "'script --out=output.svg' or 'script -o out.svg'"
-});
-argv.option({
-    name: 'in',
-    short: 'i',
-    type: 'string',
-    description: 'Path of json to input',
-    example: "'script --in=input.json' or 'script -i input.json'"
-});
+// --- Read args ---
+const optionDefinitions = [
+    { name: 'output', alias: 'o', type: String },
+    { name: 'input', alias: 'i', type: String }
+]
+const options = commandLineArgs(optionDefinitions)
 
-_argv = argv.run
-config = require('config/config.json');
+// ---Read config file ---
+config = JSON.parse(fs.readFileSync('config/config.json'));
 
-const area_info = require(_argv.options.in[0]);
-const save_svg_path = _argv.options.out[0];
-const width = config.width;
-const height = config.height;
+// --- Setting ---
+const area_info = JSON.parse(fs.readFileSync(options.input)); // Epicenter, area and its depth.
+const save_path = options.output;                             // The path to save.
+const width = config.width;                                   // Image width.
+const height = config.height;                                 // Image height.
+const def_scale = config.scale;                               // The magnification of the map.
+const sea_color = config.sea_color;                           // Sea color.
+const land_color = config.land_color;                         // Land color.
+const stroke_color = config.stroke_color;                     // Stroke color.
+const map = config.map;                                       // The map path in geojson format to use.
 
+const epicenter = area_info.epicenter;                        // epicenter. [ longitude, latitude ]
+
+// --- Read geojson(map) file ---
 const q = d3.queue()
-    .defer(fs.readFile, 'japan_geojson/land/japan.geojson');
+    .defer(fs.readFile, map);
 
 q.awaitAll((err, files) => {
     if (err) throw err;
-    const data = files.map(str => JSON.parse(str));
+    var data = JSON.parse(files);
+    data = simplify(data, 0);
+
+    var scale = def_scale;
+
+    // --- Adjust the drawing position ---
+    var aProjection = d3.geoMercator()
+        .center(epicenter)
+        .translate([width / 2, height / 2])
+        .scale(scale);
+
+    var geoPath = d3.geoPath()
+        .projection(aProjection);
+
+    // --- SVG settings ---
+    var svg = d3.select(document.body)
+        .append('svg')
+        .attr("xmlns", 'http://www.w3.org/2000/svg')
+        .attr("width", width)
+        .attr("height", height)
+        .attr("xmin", aProjection.invert([0, 0])[0])
+        .attr("xmax", aProjection.invert([width, height])[0])
+        .attr("ymin", aProjection.invert([width, height])[1])
+        .attr("ymax", aProjection.invert([0, 0])[1])
+        .attr("scale", aProjection.scale())
+        .style('background-color', sea_color);
+
+    // --- Map drawing ---
+    svg.append("path")
+        .datum(data)
+        .attr("d", geoPath)
+        .attr("fill", land_color)
+        .attr("stroke", stroke_color)
+        .attr("stroke-width", 1)
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round");
 
 
+    // --- Save SVG file ----
+    fs.writeFile(save_path, document.body.innerHTML, (err) => {
+        if (err) throw err;
+        console.log('save successful!');
+    });
 })
