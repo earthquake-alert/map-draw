@@ -1,9 +1,9 @@
 {
     "width": 1920,
-    "heght": 1080,
-    "scale": 10000,
-    "land_color": "#1a1a1a",
-    "japan_color": "#595959",
+    "height": 1080,
+    "scale": 17000,
+    "sea_color": "#1a1a1a",
+    "land_color": "#595959",
     "stroke_color": "#ffffff",
     "map": "japan_geojson/land/japan.geojson"
 }

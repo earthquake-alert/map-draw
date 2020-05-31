@@ -6,10 +6,10 @@
 
 // --- Read module ---
 const commandLineArgs = require('command-line-args');
-const d3 = Object.assign({}, require("d3"), require("d3-geo"), require("d3-queue"));
-const fs = require("fs");
+const d3 = Object.assign({}, require('d3'), require('d3-geo'), require('d3-queue'));
+const fs = require('fs');
 const simplify = require('simplify-geojson');
-const jsdom = require("jsdom");
+const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
 const document = new JSDOM(``).window.document;
@@ -38,6 +38,7 @@ const map = config.map;                                       // The map path in
 
 const epicenter = area_info.epicenter;                        // epicenter. [ longitude, latitude ]
 
+
 // --- Read geojson(map) file ---
 const q = d3.queue()
     .defer(fs.readFile, map);
@@ -45,15 +46,14 @@ const q = d3.queue()
 q.awaitAll((err, files) => {
     if (err) throw err;
     var data = JSON.parse(files);
-    data = simplify(data, 0);
+    data = simplify(data, (100 / def_scale));
 
-    var scale = def_scale;
 
     // --- Adjust the drawing position ---
     var aProjection = d3.geoMercator()
         .center(epicenter)
         .translate([width / 2, height / 2])
-        .scale(scale);
+        .scale(def_scale);
 
     var geoPath = d3.geoPath()
         .projection(aProjection);
@@ -61,25 +61,25 @@ q.awaitAll((err, files) => {
     // --- SVG settings ---
     var svg = d3.select(document.body)
         .append('svg')
-        .attr("xmlns", 'http://www.w3.org/2000/svg')
-        .attr("width", width)
-        .attr("height", height)
-        .attr("xmin", aProjection.invert([0, 0])[0])
-        .attr("xmax", aProjection.invert([width, height])[0])
-        .attr("ymin", aProjection.invert([width, height])[1])
-        .attr("ymax", aProjection.invert([0, 0])[1])
-        .attr("scale", aProjection.scale())
+        .attr('xmlns', 'http://www.w3.org/2000/svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('xmin', aProjection.invert([0, 0])[0])
+        .attr('xmax', aProjection.invert([width, height])[0])
+        .attr('ymin', aProjection.invert([width, height])[1])
+        .attr('ymax', aProjection.invert([0, 0])[1])
+        .attr('scale', aProjection.scale())
         .style('background-color', sea_color);
 
     // --- Map drawing ---
-    svg.append("path")
+    svg.append('path')
         .datum(data)
-        .attr("d", geoPath)
-        .attr("fill", land_color)
-        .attr("stroke", stroke_color)
-        .attr("stroke-width", 1)
-        .attr("stroke-linejoin", "round")
-        .attr("stroke-linecap", "round");
+        .attr('d', geoPath)
+        .attr('fill', land_color)
+        .attr('stroke', stroke_color)
+        .attr('stroke-width', 1)
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round');
 
 
     // --- Save SVG file ----
