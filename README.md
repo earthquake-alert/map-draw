@@ -4,6 +4,8 @@
 
 🇯🇵| [🇺🇸](documents/README_en.md)
 
+![image](assets/hoge.svg)
+
 ## tl;dr
 
 - 各地の震度、震源地をマップに描画する
@@ -33,7 +35,7 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 
 - `--input`, `-i`
   - 震源地、各地の震度の情報（json形式）
-  - フォーマットの解説は[こちら](#📄入力するファイルの形式)
+  - フォーマットの解説は[こちら](#入力するファイルの形式)
 - `--output`, `-o`
   - 生成後のファイルの保存先
 
@@ -68,7 +70,7 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
   - 使用する`geojson`ファイルのパス。
 - `seismic_intensity_color`
   - 各震度の色
-  - 詳しくは[こちら](#🎨震度色とjsonの記述フォーマット)
+  - 詳しくは[こちら](#震度色とjsonの記述フォーマット)
 
 - `epicenter_color`
   - 震源地の色
@@ -103,7 +105,7 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 
 - `areas`
   - 各地ごとの震度
-    - 震度表記は`0, 1, 2, 3, 4, under_5, over_5, under_6, over_6, 7`で記述してください。詳しくは[こちら](#🎨震度色とjsonの記述フォーマット)
+    - 震度表記は`0, 1, 2, 3, 4, under_5, over_5, under_6, over_6, 7`で記述してください。詳しくは[こちら](#震度色とjsonの記述フォーマット)
   - 例:
 
     <details>
@@ -181,6 +183,6 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 
 色調は、[特務機関NERV防災](https://nerv.app/)を参考にさせていただきました。ありがとうございます。
 
-## ライセンス
+## ⚖ライセンス
 
 [MITライセンス](LICENSE)上で公開しています。
