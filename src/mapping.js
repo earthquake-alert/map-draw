@@ -59,7 +59,6 @@ for (area_key in area_info.areas) {
 }
 var center = [sum_longitude / volume, sum_latitude / volume];
 var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
-console.log(expansion_rate);
 
 // --- Read geojson(map) file ---
 const q = d3.queue()

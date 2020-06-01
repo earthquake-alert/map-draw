@@ -27,7 +27,7 @@ cd map-draw
 yarn
 
 # 実行（例）
-node src/mapping.js -i test/example_1/areas.json -o hoge.svg
+node src/mapping.js -i test/example/example_1.json -o hoge.svg
 
 ```
 
@@ -184,7 +184,9 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 
     </details>
 
-サンプルコードは[test/example_1/areas.json](test/example_1/areas.json)にあります。
+### サンプルコード
+
+- [test/example/example_1.json](test/example/example_1.json)
 
 ## SVGからpngに変換する
 
