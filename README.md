@@ -71,10 +71,23 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 - `seismic_intensity_color`
   - 各震度の色
   - 詳しくは[こちら](#震度色とjsonの記述フォーマット)
-
-- `epicenter_color`
-  - 震源地の色
-  - デフォルトは、 ![color](https://via.placeholder.com/16/d10026/FFFFFF/?text=%20) `#d10026`
+- `epicenter`
+  - `color`
+    - 震源地の色
+    - デフォルトは、 ![color](https://via.placeholder.com/16/d10026/FFFFFF/?text=%20) `#d10026`
+  - `size`
+    - 震源地に表示されるXマークの対照の線の長さ。
+  - `stroke_width`
+    - 震源地に表示されるXマークのストロークの横幅。
+- `seismic_intensity`
+  - `circle`
+    - 震度の円の半径。
+  - `fontsize`
+    - 震度の数字のフォントサイズ。
+  - `height`
+    - 震度の文字と円がずれるため調整用。値が大きくなるごとに文字が下へずれます。
+  - `width`
+    - 震度の文字と円がずれるため調整用。値が大きくなるごとに文字が右へずれます。
 
 ## 📄入力するファイルの形式
 

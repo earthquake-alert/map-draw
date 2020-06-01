@@ -25,19 +25,20 @@ const options = commandLineArgs(optionDefinitions)
 config = JSON.parse(fs.readFileSync('config/config.json'));
 
 // --- Setting ---
-const area_info = JSON.parse(fs.readFileSync(options.input));   // Epicenter, area and its depth.
-const save_path = options.output;                               // The path to save.
-const width = config.width;                                     // Image width.
-const height = config.height;                                   // Image height.
-const def_scale = config.scale;                                 // The magnification of the map.
-const sea_color = config.sea_color;                             // Sea color.
-const land_color = config.land_color;                           // Land color.
-const stroke_color = config.stroke_color;                       // Stroke color.
-const map = config.map;                                         // The map path in geojson format to use.
-const seismic_intensity_color = config.seismic_intensity_color; // Seismic intensity color.
-const epicenter_color = config.epicenter_color;                 // Epicrnter point colir.
+const area_info = JSON.parse(fs.readFileSync(options.input));     // Epicenter, area and its depth.
+const save_path = options.output;                                 // The path to save.
+const width = config.width;                                       // Image width.
+const height = config.height;                                     // Image height.
+const def_scale = config.scale;                                   // The magnification of the map.
+const sea_color = config.sea_color;                               // Sea color.
+const land_color = config.land_color;                             // Land color.
+const stroke_color = config.stroke_color;                         // Stroke color.
+const map = config.map;                                           // The map path in geojson format to use.
+const seismic_intensity_color = config.seismic_intensity_color;   // Seismic intensity color.
+const epicenter_config = config.epicenter;                        // Epicenter drawing settings.
+const seismic_intensity_config = config.seismic_intensity;        // Seismic intensity drawing settings.
 
-const epicenter = area_info.epicenter;                          // epicenter. [ longitude, latitude ]
+const epicenter = area_info.epicenter;                            // epicenter. [ longitude, latitude ]
 
 
 
@@ -82,20 +83,39 @@ q.awaitAll((err, files) => {
         .style('fill', land_color)
         .style('stroke', stroke_color);
 
+    // -- epicenter --
+    center = aProjection(epicenter)
+    svg.append('line')
+        .attr('x1', center[0] - epicenter_config.size)
+        .attr('x2', center[0] + epicenter_config.size)
+        .attr('y1', center[1] - epicenter_config.size)
+        .attr('y2', center[1] + epicenter_config.size)
+        .attr('stroke-width', epicenter_config.stroke_width)
+        .style('stroke', epicenter_config.color);
+
+    svg.append('line')
+        .attr('x1', center[0] - epicenter_config.size)
+        .attr('x2', center[0] + epicenter_config.size)
+        .attr('y1', center[1] + epicenter_config.size)
+        .attr('y2', center[1] - epicenter_config.size)
+        .attr('stroke-width', epicenter_config.stroke_width)
+        .style('stroke', epicenter_config.color);
+
+
     // --- Seismic intensity of each place ---
     const Export = (area, color, text) => {
         coordinate = aProjection(area)
         svg.append('circle')
-            .attr('r', 30)
+            .attr('r', seismic_intensity_config.circle)
             .attr('cx', coordinate[0])
             .attr('cy', coordinate[1])
             .style('fill', color);
 
         svg.append('text')
             .text(text)
-            .attr('x', coordinate[0])
-            .attr('y', coordinate[1] + 20)
-            .attr('font-size', 60)
+            .attr('x', coordinate[0] + seismic_intensity_config.width)
+            .attr('y', coordinate[1] + seismic_intensity_config.height)
+            .attr('font-size', seismic_intensity_config.fontsize)
             .attr('text-anchor', 'middle')
             .attr('font-family', 'monospace');
     };
@@ -182,25 +202,6 @@ q.awaitAll((err, files) => {
             Export(area, color, text);
         }
     }
-
-    // -- epicenter --
-    center = aProjection(epicenter)
-    svg.append('line')
-        .attr('x1', center[0] - 30)
-        .attr('x2', center[0] + 30)
-        .attr('y1', center[1] - 30)
-        .attr('y2', center[1] + 30)
-        .attr('stroke-width', 20)
-        .style('stroke', epicenter_color);
-
-    svg.append('line')
-        .attr('x1', center[0] - 30)
-        .attr('x2', center[0] + 30)
-        .attr('y1', center[1] + 30)
-        .attr('y2', center[1] - 30)
-        .attr('stroke-width', 20)
-        .style('stroke', epicenter_color);
-
 
     // --- Save SVG file ----
     fs.writeFile(save_path, document.body.innerHTML, (err) => {

@@ -18,5 +18,15 @@
         "over_6": "#e81c2d",
         "7": "#db1d95"
     },
-    "epicenter_color": "#d10026"
+    "epicenter": {
+        "color": "#d10026",
+        "size": 25,
+        "stroke_width": 17
+    },
+    "seismic_intensity": {
+        "circle": 20,
+        "fontsize": 40,
+        "height": 14,
+        "width": 0
+    }
 }
