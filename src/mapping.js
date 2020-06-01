@@ -41,6 +41,25 @@ const copylight = config.copylight;                               // Describe Co
 
 const epicenter = area_info.epicenter;                            // epicenter. [ longitude, latitude ]
 
+var longitude = [epicenter[0], epicenter[0]];                     // [max, min, average]
+var latitude = [epicenter[1], epicenter[1]];                      // [max, min, average]
+var volume = 1;
+
+// --- Calculation of latitude and longitude ---
+var sum_longitude = epicenter[0];
+var sum_latitude = epicenter[1];
+for (area_key in area_info.areas) {
+    for (element of area_info.areas[area_key]) {
+        sum_longitude += element[0];
+        sum_latitude += element[1];
+        longitude = [Math.max(epicenter[0], element[0]), Math.min(epicenter[0], element[0])];
+        latitude = [Math.max(epicenter[1], element[1]), Math.min(epicenter[1], element[1])];
+        volume++;
+    }
+}
+var center = [sum_longitude / volume, sum_latitude / volume];
+var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
+console.log(expansion_rate);
 
 // --- Read geojson(map) file ---
 const q = d3.queue()
@@ -53,9 +72,9 @@ q.awaitAll((err, files) => {
 
     // --- Adjust the drawing position ---
     var aProjection = d3.geoMercator()
-        .center(epicenter)
+        .center(center)
         .translate([width / 2, height / 2])
-        .scale(def_scale);
+        .scale(def_scale + expansion_rate * 1000);
 
     var geoPath = d3.geoPath()
         .projection(aProjection);
