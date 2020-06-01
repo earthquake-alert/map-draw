@@ -1,8 +1,8 @@
-// -----------------------------------------
-// @author: Yuto Watanabe
-//
-// Copyright (c) 2020 Earthquake alert
-// -----------------------------------------
+/*
+* @author: Yuto Watanabe
+*
+* Copyright (c) 2020 Earthquake alert
+*/
 
 // --- Read module ---
 const commandLineArgs = require('command-line-args');
@@ -11,7 +11,7 @@ const fs = require('fs');
 const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
-const document = new JSDOM(`<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">`).window.document;
+const document = new JSDOM(``).window.document;
 
 
 // --- Read args ---
@@ -19,7 +19,7 @@ const optionDefinitions = [
     { name: 'output', alias: 'o', type: String },
     { name: 'input', alias: 'i', type: String }
 ]
-const options = commandLineArgs(optionDefinitions)
+const options = commandLineArgs(optionDefinitions);
 
 // ---Read config file ---
 config = JSON.parse(fs.readFileSync('config/config.json'));
@@ -37,9 +37,9 @@ const map = config.map;                                           // The map pat
 const seismic_intensity_color = config.seismic_intensity_color;   // Seismic intensity color.
 const epicenter_config = config.epicenter;                        // Epicenter drawing settings.
 const seismic_intensity_config = config.seismic_intensity;        // Seismic intensity drawing settings.
+const copylight = config.copylight;                               // Describe Copyright.
 
 const epicenter = area_info.epicenter;                            // epicenter. [ longitude, latitude ]
-
 
 
 // --- Read geojson(map) file ---
@@ -71,6 +71,7 @@ q.awaitAll((err, files) => {
         .attr('ymin', aProjection.invert([width, height])[1])
         .attr('ymax', aProjection.invert([0, 0])[1])
         .attr('scale', aProjection.scale())
+        .attr('encoding', 'utf-8')
         .style('background-color', sea_color);
 
     // --- Map drawing ---
@@ -117,7 +118,7 @@ q.awaitAll((err, files) => {
             .attr('y', coordinate[1] + seismic_intensity_config.height)
             .attr('font-size', seismic_intensity_config.fontsize)
             .attr('text-anchor', 'middle')
-            .attr('font-family', 'monospace');
+            .attr('font-family', seismic_intensity_config.font);
     };
 
     // Seismic intensity 0
@@ -202,6 +203,15 @@ q.awaitAll((err, files) => {
             Export(area, color, text);
         }
     }
+
+    // --- Copyright ---
+    svg.append('text')
+        .text(copylight.text.join(' / '))
+        .attr('x', 10)
+        .attr('y', height - copylight.size)
+        .attr('font-size', copylight.size)
+        .attr('font-family', copylight.font)
+        .style('fill', copylight.color);
 
     // --- Save SVG file ----
     fs.writeFile(save_path, document.body.innerHTML, (err) => {

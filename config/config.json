@@ -26,7 +26,17 @@
     "seismic_intensity": {
         "circle": 20,
         "fontsize": 40,
+        "font": "Arial",
         "height": 14,
         "width": 0
+    },
+    "copylight": {
+        "text": [
+            "Copyright (c) 2020 Earthquake alert",
+            "Map data: GSI website(https://www.gsi.go.jp/kankyochiri/gm_jpn.html)"
+        ],
+        "size": 20,
+        "color": "#c9c9c9",
+        "font": "Arial"
     }
 }

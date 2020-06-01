@@ -4,7 +4,7 @@
 
 🇯🇵| [🇺🇸](documents/README_en.md)
 
-![image](assets/hoge.svg)
+![image](assets/title.png)
 
 ## tl;dr
 
@@ -31,13 +31,15 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
 
 ```
 
-### 🔖引数の説明
-
 - `--input`, `-i`
   - 震源地、各地の震度の情報（json形式）
   - フォーマットの解説は[こちら](#入力するファイルの形式)
 - `--output`, `-o`
   - 生成後のファイルの保存先
+
+### フォント
+
+- Arial（フォント）
 
 ## 📒細かい設定
 
@@ -88,6 +90,18 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
     - 震度の文字と円がずれるため調整用。値が大きくなるごとに文字が下へずれます。
   - `width`
     - 震度の文字と円がずれるため調整用。値が大きくなるごとに文字が右へずれます。
+  - `font`
+    - フォント。デバイスにインストールされたフォントを指定してください。
+- `copylight`
+  - `text`
+    - コピーライト文。配列として複数出力できます。フォントにより日本語を正しく表示できない場合があるので注意してください。
+  - `size`
+    - コピーライトのサイズ。
+  - `color`
+    - コピーライトの色。
+    - デフォルトは、 ![color](https://via.placeholder.com/16/c9c9c9/FFFFFF/?text=%20) `#c9c9c9`
+  - `font`
+    - フォント。デバイスにインストールされたフォントを指定してください。
 
 ## 📄入力するファイルの形式
 
@@ -171,6 +185,17 @@ node src/mapping.js -i test/example_1/areas.json -o hoge.svg
     </details>
 
 サンプルコードは[test/example_1/areas.json](test/example_1/areas.json)にあります。
+
+## SVGからpngに変換する
+
+```bash
+node src convert -i [input file path] -o [output file path]
+```
+
+- `--input`, `-i`
+  - SVG形式のファイルのパス・
+- `--output`, `-o`
+  - 生成後のpngファイルの保存先のパス
 
 ## 🎨震度色とJsonの記述フォーマット
 
