@@ -8,7 +8,6 @@
 const commandLineArgs = require('command-line-args');
 const d3 = Object.assign({}, require('d3'), require('d3-geo'), require('d3-queue'));
 const fs = require('fs');
-const simplify = require('simplify-geojson');
 const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
@@ -38,7 +37,7 @@ const map = config.map;                                         // The map path 
 const seismic_intensity_color = config.seismic_intensity_color; // Seismic intensity color.
 const epicenter_color = config.epicenter_color;                 // Epicrnter point colir.
 
-const epicenter = area_info.epicenter;                        // epicenter. [ longitude, latitude ]
+const epicenter = area_info.epicenter;                          // epicenter. [ longitude, latitude ]
 
 
 
