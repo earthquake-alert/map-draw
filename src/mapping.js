@@ -48,7 +48,6 @@ const q = d3.queue()
 q.awaitAll((err, files) => {
     if (err) throw err;
     var data = JSON.parse(files);
-    data = simplify(data, (100 / def_scale));
 
 
     // --- Adjust the drawing position ---
