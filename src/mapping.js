@@ -54,27 +54,35 @@ for (area_key in area_info.areas) {
     for (element of area_info.areas[area_key]) {
         sum_longitude += element[0];
         sum_latitude += element[1];
-        longitude = [Math.max(epicenter[0], element[0]), Math.min(epicenter[0], element[0])];
-        latitude = [Math.max(epicenter[1], element[1]), Math.min(epicenter[1], element[1])];
+        longitude = [Math.max(longitude[0], element[0]), Math.min(longitude[1], element[0])];
+        latitude = [Math.max(latitude[0], element[1]), Math.min(latitude[1], element[1])];
         volume++;
     }
 }
 var center = [sum_longitude / volume, sum_latitude / volume];
 var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
-var resolution;
+var resolution, _scale;
 
 
 // --- Simplification rate ---
-if (expansion_rate < 1) {
-    resolution = 0.0001;
+if (expansion_rate == 0) {
+    resolution = 0.005;
+    _scale = 1;
 } else if (expansion_rate < 3) {
     resolution = 0.005;
+    _scale = 1.6;
 } else if (expansion_rate < 5) {
     resolution = 0.01;
+    _scale = 1.4;
 } else if (expansion_rate < 7) {
-    resolution = 0.05;
+    resolution = 0.01;
+    _scale = 1;
+} else if (expansion_rate < 9) {
+    resolution = 0.01;
+    _scale = 0.4;
 } else {
-    resolution = 0.1;
+    resolution = 0.06;
+    _scale = 0.25;
 }
 
 // --- Read geojson(map) file ---
@@ -91,7 +99,7 @@ q.awaitAll((err, files) => {
     var aProjection = d3.geoMercator()
         .center(center)
         .translate([width / 2, height / 2])
-        .scale(def_scale + 10000 / expansion_rate);
+        .scale(def_scale * _scale);
 
     var geoPath = d3.geoPath()
         .projection(aProjection);
@@ -202,7 +210,7 @@ q.awaitAll((err, files) => {
     if (area_info.areas['under_5']) {
         color = seismic_intensity_color['under_5']
         text = '5-'
-        for (let area of area_info.areas['inder_5']) {
+        for (let area of area_info.areas['under_5']) {
             Export(area, color, text);
         }
     }
