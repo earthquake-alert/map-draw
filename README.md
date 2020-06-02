@@ -22,7 +22,7 @@
 今回上記2つのインストール方法は割愛する。
 
 ```bash
-# yarn、nodeはインストールされている状態とする
+# yarn, nodeはインストールされている状態とする
 cd map-draw
 yarn
 
@@ -39,7 +39,7 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg
 
 ### フォント
 
-- Arial（フォント）
+- Arial（configで変更できます。）
 
 ## 📒細かい設定
 
@@ -110,10 +110,14 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg
 ```json
 {
     "epicenter": [
-        // 経度, 緯度
+        経度, 緯度
     ],
     "areas": {
-        // "震度": [[緯度, 経度], [経度, 緯度]]
+        "震度": [
+          [緯度, 経度],
+          [経度, 緯度]
+          ...
+        ]
         ...
     }
 }
@@ -189,6 +193,11 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg
 - [test/example/example_1.json](test/example/example_1.json)
 - [test/example/example_2.json](test/example/example_2.json)
 - [test/example/example_3.json](test/example/example_3.json)
+- [test/example/example_4.json](test/example/example_4.json)
+- [test/example/example_5.json](test/example/example_5.json)
+- [test/example/example_6.json](test/example/example_6.json)
+- [test/example/example_7.json](test/example/example_7.json)
+- [test/example/example_8.json](test/example/example_8.json)
 
 ## SVGからpngに変換する
 
