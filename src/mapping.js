@@ -1,5 +1,6 @@
 /*
 * @author: Yuto Watanabe
+* @verison: 1.0.0
 *
 * Copyright (c) 2020 Earthquake alert
 */
