@@ -8,6 +8,7 @@
 const commandLineArgs = require('command-line-args');
 const d3 = Object.assign({}, require('d3'), require('d3-geo'), require('d3-queue'));
 const fs = require('fs');
+const simplify = require('simplify-geojson')
 const jsdom = require('jsdom');
 
 const { JSDOM } = jsdom;
@@ -45,6 +46,7 @@ var longitude = [epicenter[0], epicenter[0]];                     // [max, min, 
 var latitude = [epicenter[1], epicenter[1]];                      // [max, min, average]
 var volume = 1;
 
+
 // --- Calculation of latitude and longitude ---
 var sum_longitude = epicenter[0];
 var sum_latitude = epicenter[1];
@@ -59,6 +61,21 @@ for (area_key in area_info.areas) {
 }
 var center = [sum_longitude / volume, sum_latitude / volume];
 var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
+var resolution;
+
+
+// --- Simplification rate ---
+if (expansion_rate < 1) {
+    resolution = 0.0001;
+} else if (expansion_rate < 3) {
+    resolution = 0.005;
+} else if (expansion_rate < 5) {
+    resolution = 0.01;
+} else if (expansion_rate < 7) {
+    resolution = 0.05;
+} else {
+    resolution = 0.1;
+}
 
 // --- Read geojson(map) file ---
 const q = d3.queue()
@@ -67,13 +84,14 @@ const q = d3.queue()
 q.awaitAll((err, files) => {
     if (err) throw err;
     var data = JSON.parse(files);
+    data = simplify(data, resolution);
 
 
     // --- Adjust the drawing position ---
     var aProjection = d3.geoMercator()
         .center(center)
         .translate([width / 2, height / 2])
-        .scale(def_scale + expansion_rate * 1000);
+        .scale(def_scale + 10000 / expansion_rate);
 
     var geoPath = d3.geoPath()
         .projection(aProjection);
