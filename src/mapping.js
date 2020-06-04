@@ -39,7 +39,7 @@ const map = config.map;                                           // The map pat
 const seismic_intensity_color = config.seismic_intensity_color;   // Seismic intensity color.
 const epicenter_config = config.epicenter;                        // Epicenter drawing settings.
 const seismic_intensity_config = config.seismic_intensity;        // Seismic intensity drawing settings.
-const copylight = config.copylight;                               // Describe Copyright.
+const copyright = config.copyright;                               // Describe Copyright.
 
 const epicenter = area_info.epicenter;                            // epicenter. [ longitude, latitude ]
 
@@ -251,12 +251,12 @@ q.awaitAll((err, files) => {
 
     // --- Copyright ---
     svg.append('text')
-        .text(copylight.text.join(' / '))
+        .text(copyright.text.join(' / '))
         .attr('x', 10)
-        .attr('y', height - copylight.size)
-        .attr('font-size', copylight.size)
-        .attr('font-family', copylight.font)
-        .style('fill', copylight.color);
+        .attr('y', height - copyright.size)
+        .attr('font-size', copyright.size)
+        .attr('font-family', copyright.font)
+        .style('fill', copyright.color);
 
     // --- Save SVG file ----
     fs.writeFile(save_path, document.body.innerHTML, (err) => {
