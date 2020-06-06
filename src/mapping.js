@@ -19,12 +19,13 @@ const document = new JSDOM(``).window.document;
 // --- Read args ---
 const optionDefinitions = [
     { name: 'output', alias: 'o', type: String },
-    { name: 'input', alias: 'i', type: String }
+    { name: 'input', alias: 'i', type: String },
+    { name: 'config', alias: 'c', type: String }
 ]
 const options = commandLineArgs(optionDefinitions);
 
 // ---Read config file ---
-config = JSON.parse(fs.readFileSync('config/config.json'));
+config = JSON.parse(fs.readFileSync(options.config));
 
 // --- Setting ---
 const area_info = JSON.parse(fs.readFileSync(options.input));     // Epicenter, area and its depth.

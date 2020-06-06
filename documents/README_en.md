@@ -27,7 +27,7 @@ cd map-draw
 yarn
 
 # Run (examlple)
-node src/mapping.js -i test/example/example_1.json -o hoge.svg
+node src/mapping.js -i test/example/example_1.json -o hoge.svg -c config/config.json
 
 ```
 
@@ -36,6 +36,8 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg
   - The format is explained [here](#Type-of-file-to-enter).
 - `--output`, `-o`
   - Where to save files after generation
+- `--config`, `-c`
+  - path of config.
 
 ### Font
 
