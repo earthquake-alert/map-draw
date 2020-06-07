@@ -24,10 +24,10 @@
         "stroke_width": 17
     },
     "seismic_intensity": {
-        "circle": 20,
-        "fontsize": 40,
+        "circle": 15,
+        "fontsize": 30,
         "font": "Arial",
-        "height": 14,
+        "height": 10,
         "width": 0
     },
     "copyright": {

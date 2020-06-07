@@ -65,26 +65,28 @@ var center = [sum_longitude / volume, sum_latitude / volume];
 var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
 var resolution, _scale;
 
-
 // --- Simplification rate ---
 if (expansion_rate == 0) {
     resolution = 0.005;
     _scale = 1;
+} else if (expansion_rate < 1) {
+    resolution = 0.005;
+    _scale = 3;
 } else if (expansion_rate < 3) {
     resolution = 0.005;
-    _scale = 1.6;
+    _scale = 1.75;
 } else if (expansion_rate < 5) {
     resolution = 0.01;
     _scale = 1.4;
 } else if (expansion_rate < 7) {
     resolution = 0.01;
-    _scale = 1;
+    _scale = 1.2;
 } else if (expansion_rate < 9) {
     resolution = 0.01;
-    _scale = 0.4;
+    _scale = 1.2;
 } else {
-    resolution = 0.06;
-    _scale = 0.25;
+    resolution = 0.01;
+    _scale = 1;
 }
 
 // --- Read geojson(map) file ---
