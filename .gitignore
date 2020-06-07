@@ -331,4 +331,5 @@ $RECYCLE.BIN/
 
 
 # svg file
-output/
+output/*
+test/example_image/*.png
