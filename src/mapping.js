@@ -135,11 +135,27 @@ q.awaitAll((err, files) => {
     // -- epicenter --
     center = aProjection(epicenter)
     svg.append('line')
+        .attr('x1', center[0] - epicenter_config.size - epicenter_config.stroke_width)
+        .attr('x2', center[0] + epicenter_config.size + epicenter_config.stroke_width)
+        .attr('y1', center[1] - epicenter_config.size - epicenter_config.stroke_width)
+        .attr('y2', center[1] + epicenter_config.size + epicenter_config.stroke_width)
+        .attr('stroke-width', epicenter_config.width + epicenter_config.stroke_width * 2)
+        .style('stroke', epicenter_config.stroke);
+
+    svg.append('line')
+        .attr('x1', center[0] - epicenter_config.size - epicenter_config.stroke_width)
+        .attr('x2', center[0] + epicenter_config.size + epicenter_config.stroke_width)
+        .attr('y1', center[1] + epicenter_config.size + epicenter_config.stroke_width)
+        .attr('y2', center[1] - epicenter_config.size - epicenter_config.stroke_width)
+        .attr('stroke-width', epicenter_config.width + epicenter_config.stroke_width * 2)
+        .style('stroke', epicenter_config.stroke);
+
+    svg.append('line')
         .attr('x1', center[0] - epicenter_config.size)
         .attr('x2', center[0] + epicenter_config.size)
         .attr('y1', center[1] - epicenter_config.size)
         .attr('y2', center[1] + epicenter_config.size)
-        .attr('stroke-width', epicenter_config.stroke_width)
+        .attr('stroke-width', epicenter_config.width)
         .style('stroke', epicenter_config.color);
 
     svg.append('line')
@@ -147,7 +163,7 @@ q.awaitAll((err, files) => {
         .attr('x2', center[0] + epicenter_config.size)
         .attr('y1', center[1] + epicenter_config.size)
         .attr('y2', center[1] - epicenter_config.size)
-        .attr('stroke-width', epicenter_config.stroke_width)
+        .attr('stroke-width', epicenter_config.width)
         .style('stroke', epicenter_config.color);
 
 
