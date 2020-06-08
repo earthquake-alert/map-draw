@@ -116,7 +116,7 @@ You can use `.json` to write a description.
         longitude, latitude
     ],
     "areas": {
-        "震度": [
+        "Seismic intensity": [
           [longitude, latitude],
           [longitude, latitude]
           ...
@@ -202,6 +202,8 @@ You can use `.json` to write a description.
 - [test/example/example_6.json](../test/example/example_6.json)
 - [test/example/example_7.json](../test/example/example_7.json)
 - [test/example/example_8.json](../test/example/example_8.json)
+- [test/example/example_9.json](../test/example/example_9.json)
+- [test/example/example_10.json](../test/example/example_10.json)
 
 ## Convert SVG to png
 
@@ -229,7 +231,7 @@ node src convert -i [input file path] -o [output file path]
    |    `over_6`    |  6+   | ![color](https://via.placeholder.com/16/e81c2d/FFFFFF/?text=%20) `#e81c2d` |
    |      `7`       |   7   | ![color](https://via.placeholder.com/16/db1d95/FFFFFF/?text=%20) `#db1d95` |
 
-## 🙇謝辞
+## 🙇thanks
 
 I referred to the following article as a reference. Thank you very much.
 

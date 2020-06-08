@@ -200,6 +200,8 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg -c config/config.
 - [test/example/example_6.json](test/example/example_6.json)
 - [test/example/example_7.json](test/example/example_7.json)
 - [test/example/example_8.json](test/example/example_8.json)
+- [test/example/example_9.json](test/example/example_9.json)
+- [test/example/example_10.json](test/example/example_10.json)
 
 ## SVGからpngに変換する
 
