@@ -8,11 +8,11 @@
 
 ## tl;dr
 
-- 各地の震度、震源地をマップに描画する
+- 震度分布図のpng画像を生成する
 
-## 使い方
+## 💻使い方
 
-### 💻インストール
+### インストール
 
 必要なもの
 
@@ -241,3 +241,5 @@ node src convert -i [input file path] -o [output file path]
 ## ⚖ライセンス
 
 [MITライセンス](LICENSE)下で公開しています。
+
+使用している日本地図は[国土交通省国土地理院の地球地図日本](https://www.gsi.go.jp/kankyochiri/gm_jpn.html)をgeojsonフォーマットに変換して使用しています。

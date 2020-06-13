@@ -8,11 +8,11 @@
 
 ## tl;dr
 
-- Draw the seismic intensity and epicenter of each area on a map.
+- Generate png images of the seismic intensity distribution
 
-## Usage
+## 💻Usage
 
-### 💻Install
+### Install
 
 What you need.
 
@@ -141,7 +141,7 @@ You can use `.json` to write a description.
 - `areas`
   - Seismic intensity in each area
     - The seismic intensity should be written as `0, 1, 2, 3, 4, under_5, over_5, under_6, over_6, 7`. For more information, please click [here](#Seismic-intensity-color-and-Json-description-format).
-  - 例:
+  - for example:
 
     <details>
     <summary>Click</summary>
@@ -243,3 +243,5 @@ The color scheme is based on the [NERV disaster management system](https://nerv.
 ## ⚖License
 
 Published under the [MIT license](../LICENSE).
+
+The map used in this page is based on "Global Map Japan" by Geographical Survey Institute, Ministry of Land, Infrastructure, Transport and Tourism, converted to geojson format.
