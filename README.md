@@ -1,6 +1,7 @@
 # Map draw
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/earthquake-alert/map-draw?style=flat-square)
+![map data](https://img.shields.io/badge/MapData-Geographical%20Survey%20Institute-blue?link=https://www.gsi.go.jp/kankyochiri/gm_jpn.html&link=https://www.gsi.go.jp/kankyochiri/gm_jpn.html&style=flat-square)
 
 🇯🇵| [🇺🇸](documents/README_en.md)
 
