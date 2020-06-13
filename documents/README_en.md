@@ -5,8 +5,7 @@
 
 [🇯🇵](../README.md)| 🇺🇸
 
-<img src="../assets/title.png" width="50%"><img src="../assets/title_2.png" width="50%">
-<img src="../assets/title_3.png" width="50%"><img src="../assets/title_4.png" width="50%">
+![title](../assets/title.png)
 
 ## tl;dr
 
