@@ -59,6 +59,11 @@ You can change the size, magnification, and color of the generated image by
 - `scale`
   - Magnification. The larger the digit, the larger it will be.
   - If the magnification is low, the resolution will automatically be lower.
+- `resolution`
+  - Map resolution.
+  - The higher the value, the rougher it becomes.
+- `stroke_width`
+  - The thickness of the map line.
 - `sea_color`
   - Color of sea.
   - The default is ![color](https://via.placeholder.com/16/1a1a1a/FFFFFF/?text=%20) `#1a1a1a`

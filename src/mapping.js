@@ -32,6 +32,8 @@ const area_info = JSON.parse(fs.readFileSync(options.input));     // Epicenter, 
 const save_path = options.output;                                 // The path to save.
 const width = config.width;                                       // Image width.
 const height = config.height;                                     // Image height.
+const map_stroke = config.stroke_width;                           // stroke width of the map.
+const resolution = config.resolution;                             // Map resolution.
 const def_scale = config.scale;                                   // The magnification of the map.
 const sea_color = config.sea_color;                               // Sea color.
 const land_color = config.land_color;                             // Land color.
@@ -63,29 +65,22 @@ for (area_key in area_info.areas) {
 }
 var center = [sum_longitude / volume, sum_latitude / volume];
 var expansion_rate = longitude[0] - longitude[1] + latitude[0] - latitude[1];
-var resolution, _scale;
+var _scale;
 
 // --- Simplification rate ---
 if (expansion_rate == 0) {
-    resolution = 0.005;
     _scale = 1;
 } else if (expansion_rate < 1) {
-    resolution = 0.005;
     _scale = 3;
 } else if (expansion_rate < 3) {
-    resolution = 0.005;
     _scale = 1.75;
 } else if (expansion_rate < 5) {
-    resolution = 0.01;
     _scale = 1.4;
 } else if (expansion_rate < 7) {
-    resolution = 0.01;
     _scale = 1.2;
 } else if (expansion_rate < 9) {
-    resolution = 0.01;
     _scale = 1.2;
 } else {
-    resolution = 0.01;
     _scale = 1;
 }
 
@@ -126,7 +121,7 @@ q.awaitAll((err, files) => {
     svg.append('path')
         .datum(data)
         .attr('d', geoPath)
-        .attr('stroke-width', 1)
+        .attr('stroke-width', map_stroke)
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .style('fill', land_color)

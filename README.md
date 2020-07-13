@@ -61,6 +61,11 @@ node src/mapping.js -i test/example/example_1.json -o hoge.svg -c config/config.
 - `scale`
   - 倍率。桁が大きくなるほど拡大されます。
   - 拡大率が低い場合、自動的に解像度が低くなります。
+- `resolution`
+  - 地図の解像度。
+  - 値が大きいほど荒くなります。
+- `stroke_width`
+  - 地図の線の太さ。
 - `sea_color`
   - 海の色。
   - デフォルトは、 ![color](https://via.placeholder.com/16/1a1a1a/FFFFFF/?text=%20) `#1a1a1a`
