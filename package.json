@@ -6,7 +6,7 @@
     "d3-geo": "^1.12.1",
     "d3-queue": "^3.0.7",
     "fs": "^0.0.1-security",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.5.0",
     "node-fetch": "^2.6.1",
     "simplify-geojson": "https://github.com/earthquake-alert/simplify-geojson.git"
   }
